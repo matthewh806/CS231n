@@ -133,29 +133,21 @@ class KNearestNeighbor(object):
     """
     num_test = dists.shape[0]
     y_pred = np.zeros(num_test)
+    test = np.argwhere(dists[0,:][:k])
     for i in xrange(num_test):
       # A list of length k storing the labels of the k nearest neighbors to
       # the ith test point.
       closest_y = []
-      #########################################################################
-      # TODO:                                                                 #
-      # Use the distance matrix to find the k nearest neighbors of the ith    #
-      # testing point, and use self.y_train to find the labels of these       #
-      # neighbors. Store these labels in closest_y.                           #
-      # Hint: Look up the function numpy.argsort.                             #
-      #########################################################################
-      pass
-      #########################################################################
-      # TODO:                                                                 #
-      # Now that you have found the labels of the k nearest neighbors, you    #
-      # need to find the most common label in the list closest_y of labels.   #
-      # Store this label in y_pred[i]. Break ties by choosing the smaller     #
-      # label.                                                                #
-      #########################################################################
-      pass
-      #########################################################################
-      #                           END OF YOUR CODE                            # 
-      #########################################################################
+      knn = (np.argsort(dists[i, :])[:k])
+      closest_y = self.y_train[knn].tolist()
+      
+      from collections import Counter
+      def mode_function(list):
+          counter = Counter(list)
+          _, val = counter.most_common(1)[0]
+          return [x for x,y in counter.items() if y == val]
+
+      y_pred[i] = min(mode_function(closest_y))
 
     return y_pred
 
