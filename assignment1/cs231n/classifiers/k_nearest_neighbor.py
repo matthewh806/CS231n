@@ -104,10 +104,11 @@ class KNearestNeighbor(object):
     # HINT: Try to formulate the l2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
-    pass
-    #########################################################################
-    #                         END OF YOUR CODE                              #
-    #########################################################################
+    # Expand out the brackets - (I_1 + I_2)^2
+    x2 = np.sum( self.X_train * self.X_train, axis=1)
+    y2 = np.sum( X * X, axis=1, keepdims=True)
+    xy = np.dot(X, self.X_train.T)
+    dists = np.sqrt(x2 - 2*xy + y2)
     return dists
 
   def predict_labels(self, dists, k=1):
