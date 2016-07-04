@@ -30,6 +30,11 @@ def softmax_loss_naive(W, X, y, reg):
   # regularization!                                                           #
   #############################################################################
   
+  """
+    Gradient of L_i = -f_{yi} + log( sum_j( e_{f_j} )
+
+    [dL_i / df_j, dL_i / df_y_i] = [ 1 / sum(exp(f_j)), -1 + 1 / sum(exp(f_j))]
+  """
   num_classes = W.shape[1]
   num_train = X.shape[0]
   L = np.zeros(num_train)
@@ -43,12 +48,18 @@ def softmax_loss_naive(W, X, y, reg):
       sum_j = 0
       for j in xrange(num_classes):
         sum_j += np.exp(scores[j]) 
-      
+        dW[:, j] += 1.0 / sum_j * np.exp(scores[j]) * X[i,:]
+
+        if j == y[i]:
+            dW[:, j] -= X[i,:]
+
       L[i] += np.log(sum_j)
 
   loss = np.sum(L) / num_train
+  dW /= num_train
 
   loss += 0.5 * reg * np.sum(W * W)
+  dW += reg * W
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
