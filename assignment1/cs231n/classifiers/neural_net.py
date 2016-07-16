@@ -112,7 +112,26 @@ class TwoLayerNet(object):
     # and biases. Store the results in the grads dictionary. For example,       #
     # grads['W1'] should store the gradient on W1, and be a matrix of same size #
     #############################################################################
-    pass
+    dscores = probs
+    dscores[range(N), y] -= 1
+    dscores /= N
+
+    # Back propagate gradient to parameters
+    # W2 and b2
+    grads['W2'] = np.dot(hidden_layer.T, dscores)
+    grads['b2'] = np.sum(dscores, axis=0, keepdims=True)
+    # Back propagate into hidden layer
+    dhidden = np.dot(dscores, W2.T)
+    # Back propagate into ReLU non-linearity
+    dhidden[hidden_layer <= 0] = 0
+    # Back propagate into W & b
+    grads['W1'] = np.dot(X.T, dhidden)
+    grads['b1'] = np.sum(dhidden, axis = 0, keepdims=True)
+
+    # Regularization contribution
+    grads['W2'] += reg * W2
+    grads['W1'] += reg * W1
+
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
