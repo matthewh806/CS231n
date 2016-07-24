@@ -96,4 +96,4 @@ tags
 *swp
 
 # Datasets
-cs231n/assignment1/cs231n/datasets/galaxyzoo/
+galaxyzoo/datasets/*/*
