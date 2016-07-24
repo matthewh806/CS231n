@@ -1,0 +1,13 @@
+{
+    "kaggle": {
+        "username": "",
+        "password": "",
+        "data_urls": [
+            "https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/download/images_training_rev1.zip",
+            "https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/download/training_solutions_rev1.zip",
+            "https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/download/images_test_rev1.zip"
+        ]
+    }
+}
+
+
